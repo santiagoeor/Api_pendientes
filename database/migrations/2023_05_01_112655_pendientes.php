@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id('pend');
             $table->string('pendiente');
             $table->unsignedBigInteger('categoria_id');
-            $table->foreign('categoria_id')->references('catg')->on('categorias')->onDelete('cascade');
+            // $table->foreign('categoria_id')->references('catg')->on('categorias')->onDelete('cascade');
+            $table->foreign('categoria_id')->references('catg')->on('categorias');
             $table->date('fecha');
             $table->time('hora');
             $table->timestamps();

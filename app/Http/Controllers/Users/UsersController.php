@@ -54,7 +54,8 @@ class UsersController extends Controller
                 'name' => 'required|max:255',
                 'email' => 'required|email|unique:users,email|min:6',
                 'password' => 'required|min:6',
-                'fotoUser' => 'required|image|max:10240'
+                'fotoUser' => 'required|image|max:10240',
+                'rol' => 'required'
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
@@ -71,10 +72,11 @@ class UsersController extends Controller
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
             'fotoUser' => $imageUrl,
+            'rol' => $request->input('rol'),
         ]);
 
         return response()->json([
-            'user'=>$user
+            'ok'=>'usuario creado'
         ],201);
     }
 
@@ -142,7 +144,7 @@ class UsersController extends Controller
          
 
         return response()->json([
-            'user'=>$user
+            'ok'=> 'usuario actualizado'
         ],201);
     }
 
