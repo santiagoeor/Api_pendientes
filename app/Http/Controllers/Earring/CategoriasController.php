@@ -16,6 +16,19 @@ class CategoriasController extends Controller
           
     }
 
+    public function search(Request $request)
+    {
+        $searchTerm = $request->search;
+        // $searchTerm = $request->input('search');
+
+        $categoria = Categoria::query()
+                    ->where('categoria', 'like', '%'.$searchTerm.'%')
+                    // ->orWhere('email', 'like', '%'.$searchTerm.'%')
+                    ->get();
+
+                    return response()->json($categoria);
+    }
+
     public function create(Request $request)
     {
         try{

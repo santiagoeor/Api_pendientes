@@ -25,7 +25,7 @@ class UsersController extends Controller
            $prefix = 'public/';
            $pdfImageFolder = substr($pathSavedImagePdf, strlen($prefix)); // obtiene "imágenes"
          
-            $pathFiles = env('RUTA_SERVER_FILES');
+            $pathFiles = env('RUTA_SERVER');
             return $savedImagePdf ? $pdfImageUrl = $pathFiles.$pdfImageFolder.'/'.$pdfImageName : response()->json(['mensaje' => 'Error al guardar la imagen'], 400);      
 
         } else {
@@ -44,6 +44,19 @@ class UsersController extends Controller
           return response()->json($users);
     }
 
+    public function search(Request $request)
+    {
+        $searchTerm = $request->search;
+        // $searchTerm = $request->input('search');
+
+        $users = User::query()
+                    ->where('name', 'like', '%'.$searchTerm.'%')
+                    ->orWhere('email', 'like', '%'.$searchTerm.'%')
+                    ->get();
+
+                    return response()->json($users);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -54,8 +67,7 @@ class UsersController extends Controller
                 'name' => 'required|max:255',
                 'email' => 'required|email|unique:users,email|min:6',
                 'password' => 'required|min:6',
-                'fotoUser' => 'required|image|max:10240',
-                'rol' => 'required'
+                'fotoUser' => 'required|image|max:10240'
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
@@ -72,7 +84,6 @@ class UsersController extends Controller
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
             'fotoUser' => $imageUrl,
-            'rol' => $request->input('rol'),
         ]);
 
         return response()->json([

@@ -4,13 +4,26 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
+use App\Models\User;
 use Illuminate\Http\Request;
-// use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
+
+   
+
+
+    public function pruebas()
+        {
+            return response()->json([
+                "ok" => "todo funciona"
+            ]);
+        }
+
+   
+
     public function login(Request $request){
 
         try {
@@ -39,7 +52,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-
     /**
      * Get the token array structure.
      *
@@ -59,4 +71,6 @@ class AuthController extends Controller
             'user_id' => $user_id
         ]);
     }
+
+
 }

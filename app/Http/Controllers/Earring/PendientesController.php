@@ -17,6 +17,20 @@ class PendientesController extends Controller
           
     }
 
+    public function search(Request $request)
+    {
+        $searchTerm = $request->search;
+        // $searchTerm = $request->input('search');
+
+        $pendiente = Pendiente::query()
+                    ->with('categoria')
+                    ->where('pendiente', 'like', '%'.$searchTerm.'%')
+                    // ->orWhere('email', 'like', '%'.$searchTerm.'%')
+                    ->get();
+
+                    return response()->json($pendiente);
+    }
+
     public function create(Request $request){
         try{
             $request->validate([
