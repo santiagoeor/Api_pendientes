@@ -25,6 +25,7 @@ Route::post('v1/login',[AuthController::class,'login']);
 Route::get('v1/pruebas',[AuthController::class,'pruebas']);
 
 
+
 Route::group(['middleware' => ['jwt.verify']], function () {
     // Rutas protegidas por tu middleware
     Route::post('v1/logout',[AuthController::class,'logout']);
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 Route::get('v1/users/{page?}',[UsersController::class,'index']);
 Route::get('v1/user/search', [UsersController::class, 'search']);
 Route::post('v1/user',[UsersController::class,'create']);
+Route::get('v1/validarEmail', [UsersController::class, 'validarUnique']);
 Route::get('v1/user/{id?}',[UsersController::class,'show']);
 Route::put('v1/user/{id?}',[UsersController::class,'update']);
 Route::delete('v1/user/{id?}',[UsersController::class,'destroy']);

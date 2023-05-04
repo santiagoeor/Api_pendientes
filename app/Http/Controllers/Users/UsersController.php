@@ -57,6 +57,14 @@ class UsersController extends Controller
                     return response()->json($users);
     }
 
+    public function validarUnique(Request $request){
+        $email = $request->email;
+
+        $users = User::query()->where('email', '=', ''.$email.'')->get();
+
+        return response()->json($users);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
