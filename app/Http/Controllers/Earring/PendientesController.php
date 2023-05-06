@@ -37,7 +37,7 @@ class PendientesController extends Controller
                 'pendiente' => 'required|string|max:255',
                 'categoria_id' => 'required|integer|max:10',
                 'fecha' => 'required|date',
-                'hora' => 'required|date_format:H:i:s',
+                'hora' => 'required|date_format:H:i',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
