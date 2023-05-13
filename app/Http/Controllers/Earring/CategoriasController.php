@@ -33,7 +33,7 @@ class CategoriasController extends Controller
     {
         try{
             $request->validate([
-                'categoria' => 'required|max:255'
+                'categoria' => 'required|unique:categorias|max:255'
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
