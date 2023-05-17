@@ -161,10 +161,11 @@ class UsersController extends Controller
             return response()->json(['errors' => $e->errors()], 422);
         }
 
-        $url = 'public/images';
+        // $url = 'public/images';
+        $url = 'storage';
         $image = $request->file('fotoUser');
 
-         $imageUrl = $this->savePdfImage($url, $image);
+         $imageUrl = $this->savePdfImagePruebas($url, $image);
         
          $user = User::find($id);
          if(is_null($user)){
