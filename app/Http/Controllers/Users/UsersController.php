@@ -32,6 +32,20 @@ class UsersController extends Controller
             return response()->json(['mensaje' => 'Error al guardar la imagen'], 400);
         }
     }
+
+
+    function savePdfImagePruebas($pdfImageFolderUrl, $pdfImage) {
+        if ($pdfImage->isValid()) {
+            // Guarda la pdfImage en la carpeta public especificada
+            $currentDate = date('Y-m-d_H-i-s');
+            $pdfImageName = $currentDate . '_' . $pdfImage->getClientOriginalName();
+            $savedImagePdf = $pdfImage->move(public_path($pdfImageFolderUrl), $pdfImageName);
+            $pdfImageUrl = $savedImagePdf ? asset($pdfImageFolderUrl . '/' . $pdfImageName) : null;
+            return $pdfImageUrl;
+        } else {
+            return response()->json(['mensaje' => 'Error al guardar la imagen'], 400);
+        }
+    }
     /**
      * Display a listing of the resource.
      */
@@ -81,10 +95,12 @@ class UsersController extends Controller
             return response()->json(['errors' => $e->errors()], 422);
         }
 
-        $url = 'public/images';
+        // $url = 'public/images';
+        $url = 'storage';
         $image = $request->file('fotoUser');
 
-         $imageUrl = $this->savePdfImage($url, $image);
+        //  $imageUrl = $this->savePdfImage($url, $image);
+         $imageUrl = $this->savePdfImagePruebas($url, $image);
        
 
         $user = User::create([
@@ -95,7 +111,8 @@ class UsersController extends Controller
         ]);
 
         return response()->json([
-            'ok'=>'usuario creado'
+            'ok'=>'usuario creado',
+            'url' => $imageUrl
         ],201);
     }
 

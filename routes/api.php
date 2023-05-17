@@ -24,6 +24,13 @@ Route::post('v1/login',[AuthController::class,'login']);
 
 Route::get('v1/pruebas',[AuthController::class,'pruebas']);
 
+Route::get('v1/publicCategorias',[CategoriasController::class,'index']);
+Route::get('v1/publicCategorias/search', [CategoriasController::class, 'search']);
+Route::post('v1/publicCategorias',[CategoriasController::class,'create']);
+Route::get('v1/publicCategorias/{id?}',[CategoriasController::class,'show']);
+Route::put('v1/publicCategorias/{id?}',[CategoriasController::class,'update']);
+Route::delete('v1/publicCategorias/{id?}',[CategoriasController::class,'destroy']);
+
 
 
 Route::group(['middleware' => ['jwt.verify']], function () {
