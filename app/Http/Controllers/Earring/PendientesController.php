@@ -82,7 +82,7 @@ class PendientesController extends Controller
         try{
             $request->validate([
                 'pendiente' => 'required|string|max:255',
-                'categoria_id' => 'required|integer|max:10',
+                'categoria_id' => 'required|integer',
                 'fecha' => 'required|date',
                 'hora' => 'required|date_format:H:i:s',
             ]);
