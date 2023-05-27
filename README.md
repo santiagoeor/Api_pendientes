@@ -1,5 +1,6 @@
 # Api de Pendientes
 
+- El frontend lo hice en angular https://github.com/santiagoeor/clientPendientes.git
 ## Instalamos los paquetes de composer con este comando
 - composer install
 ## Configurar las variables de entorno
