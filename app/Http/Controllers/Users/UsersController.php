@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Users;
 
+use Twilio\Rest\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -10,6 +11,41 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
+
+    //paquete de composer composer require twilio/sdk
+
+    public function enviarSMS(Request $request)
+    {
+
+        try {
+            $request->validate([
+                'numero' => 'required|min:6',
+                'mensaje' => 'required|min:6'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+        }
+
+        $sid = env('SIDTWLIO');
+        $token = env('TOKENTWLIO');
+        $twilio = new Client($sid, $token);
+        
+        $numeroDestino = $request->numero;
+        $mensaje = $request->mensaje;
+        
+        $message = $twilio->messages->create(
+            $numeroDestino,
+            [
+                'from' => '+15074163135',
+                'body' => $mensaje,
+            ]
+        );
+
+        return response()->json([
+            'message' => 'SMS enviado correctamente',
+            'sid' => $message->sid,
+        ]);
+    }
 
     function savePdfImage($pdfImageFolderUrl, $pdfImage){
          if ($pdfImage->isValid()) {

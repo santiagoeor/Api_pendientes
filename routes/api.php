@@ -31,6 +31,7 @@ Route::get('v1/publicCategorias/{id?}',[CategoriasController::class,'show']);
 Route::put('v1/publicCategorias/{id?}',[CategoriasController::class,'update']);
 Route::delete('v1/publicCategorias/{id?}',[CategoriasController::class,'destroy']);
 
+Route::post('v1/user/sms',[UsersController::class,'enviarSMS']);
 
 
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -41,6 +42,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 Route::get('v1/users/{page?}',[UsersController::class,'index']);
 Route::get('v1/user/search', [UsersController::class, 'search']);
 Route::post('v1/user',[UsersController::class,'create']);
+
+
+
 Route::get('v1/validarEmail', [UsersController::class, 'validarUnique']);
 Route::get('v1/user/{id?}',[UsersController::class,'show']);
 Route::put('v1/user/{id?}',[UsersController::class,'update']);
